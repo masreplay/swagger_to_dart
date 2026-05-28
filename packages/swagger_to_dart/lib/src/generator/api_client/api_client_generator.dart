@@ -286,6 +286,7 @@ class ApiClientGenerator {
                     ..body = Block.of([
                       Code(
                         '''return ${methodName}_($_requestBodyName: $_requestBodyName${canToJson ? '.toJson()' : ''}, extras: extras,
+                      ${parameters.where((e) => e.name != _queriesParameterName).map((e) => '${e.name}: ${e.name},').join('\n')}
                       ${parameters.firstWhereOrNull((e) => e.name == _queriesParameterName) != null ? 'queries: queries,' : ''}
                       cancelToken: cancelToken,
                       onSendProgress: onSendProgress,
