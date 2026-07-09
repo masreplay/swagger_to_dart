@@ -382,11 +382,11 @@ mixin _$OpenApiSchemas {
   @JsonKey(name: 'properties')
   Map<String, OpenApiSchema>? get properties;
   @JsonKey(name: 'type')
-  String get type;
+  String? get type;
   @JsonKey(name: 'required')
   List<String>? get required_;
   @JsonKey(name: 'enum')
-  List<Object>? get enum_;
+  List<Object?>? get enum_;
   @JsonKey(name: 'const')
   Object? get const_;
   @JsonKey(name: 'title')
@@ -469,9 +469,9 @@ abstract mixin class $OpenApiSchemasCopyWith<$Res> {
       {@OpenApiSchemaJsonConverter()
       @JsonKey(name: 'properties')
       Map<String, OpenApiSchema>? properties,
-      @JsonKey(name: 'type') String type,
+      @JsonKey(name: 'type') String? type,
       @JsonKey(name: 'required') List<String>? required_,
-      @JsonKey(name: 'enum') List<Object>? enum_,
+      @JsonKey(name: 'enum') List<Object?>? enum_,
       @JsonKey(name: 'const') Object? const_,
       @JsonKey(name: 'title') String? title,
       @JsonKey(name: 'description') String? description,
@@ -500,7 +500,7 @@ class _$OpenApiSchemasCopyWithImpl<$Res>
   @override
   $Res call({
     Object? properties = freezed,
-    Object? type = null,
+    Object? type = freezed,
     Object? required_ = freezed,
     Object? enum_ = freezed,
     Object? const_ = freezed,
@@ -516,10 +516,10 @@ class _$OpenApiSchemasCopyWithImpl<$Res>
           ? _self.properties
           : properties // ignore: cast_nullable_to_non_nullable
               as Map<String, OpenApiSchema>?,
-      type: null == type
+      type: freezed == type
           ? _self.type
           : type // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       required_: freezed == required_
           ? _self.required_
           : required_ // ignore: cast_nullable_to_non_nullable
@@ -527,7 +527,7 @@ class _$OpenApiSchemasCopyWithImpl<$Res>
       enum_: freezed == enum_
           ? _self.enum_
           : enum_ // ignore: cast_nullable_to_non_nullable
-              as List<Object>?,
+              as List<Object?>?,
       const_: freezed == const_ ? _self.const_ : const_,
       title: freezed == title
           ? _self.title
@@ -669,9 +669,9 @@ extension OpenApiSchemasPatterns on OpenApiSchemas {
             @OpenApiSchemaJsonConverter()
             @JsonKey(name: 'properties')
             Map<String, OpenApiSchema>? properties,
-            @JsonKey(name: 'type') String type,
+            @JsonKey(name: 'type') String? type,
             @JsonKey(name: 'required') List<String>? required_,
-            @JsonKey(name: 'enum') List<Object>? enum_,
+            @JsonKey(name: 'enum') List<Object?>? enum_,
             @JsonKey(name: 'const') Object? const_,
             @JsonKey(name: 'title') String? title,
             @JsonKey(name: 'description') String? description,
@@ -724,9 +724,9 @@ extension OpenApiSchemasPatterns on OpenApiSchemas {
             @OpenApiSchemaJsonConverter()
             @JsonKey(name: 'properties')
             Map<String, OpenApiSchema>? properties,
-            @JsonKey(name: 'type') String type,
+            @JsonKey(name: 'type') String? type,
             @JsonKey(name: 'required') List<String>? required_,
-            @JsonKey(name: 'enum') List<Object>? enum_,
+            @JsonKey(name: 'enum') List<Object?>? enum_,
             @JsonKey(name: 'const') Object? const_,
             @JsonKey(name: 'title') String? title,
             @JsonKey(name: 'description') String? description,
@@ -777,9 +777,9 @@ extension OpenApiSchemasPatterns on OpenApiSchemas {
             @OpenApiSchemaJsonConverter()
             @JsonKey(name: 'properties')
             Map<String, OpenApiSchema>? properties,
-            @JsonKey(name: 'type') String type,
+            @JsonKey(name: 'type') String? type,
             @JsonKey(name: 'required') List<String>? required_,
-            @JsonKey(name: 'enum') List<Object>? enum_,
+            @JsonKey(name: 'enum') List<Object?>? enum_,
             @JsonKey(name: 'const') Object? const_,
             @JsonKey(name: 'title') String? title,
             @JsonKey(name: 'description') String? description,
@@ -820,9 +820,9 @@ class _OpenApiSchemas extends OpenApiSchemas {
       {@OpenApiSchemaJsonConverter()
       @JsonKey(name: 'properties')
       required final Map<String, OpenApiSchema>? properties,
-      @JsonKey(name: 'type') required this.type,
+      @JsonKey(name: 'type') this.type,
       @JsonKey(name: 'required') final List<String>? required_,
-      @JsonKey(name: 'enum') final List<Object>? enum_,
+      @JsonKey(name: 'enum') final List<Object?>? enum_,
       @JsonKey(name: 'const') this.const_,
       @JsonKey(name: 'title') this.title,
       @JsonKey(name: 'description') this.description,
@@ -855,7 +855,7 @@ class _OpenApiSchemas extends OpenApiSchemas {
 
   @override
   @JsonKey(name: 'type')
-  final String type;
+  final String? type;
   final List<String>? _required_;
   @override
   @JsonKey(name: 'required')
@@ -867,10 +867,10 @@ class _OpenApiSchemas extends OpenApiSchemas {
     return EqualUnmodifiableListView(value);
   }
 
-  final List<Object>? _enum_;
+  final List<Object?>? _enum_;
   @override
   @JsonKey(name: 'enum')
-  List<Object>? get enum_ {
+  List<Object?>? get enum_ {
     final value = _enum_;
     if (value == null) return null;
     if (_enum_ is EqualUnmodifiableListView) return _enum_;
@@ -990,9 +990,9 @@ abstract mixin class _$OpenApiSchemasCopyWith<$Res>
       {@OpenApiSchemaJsonConverter()
       @JsonKey(name: 'properties')
       Map<String, OpenApiSchema>? properties,
-      @JsonKey(name: 'type') String type,
+      @JsonKey(name: 'type') String? type,
       @JsonKey(name: 'required') List<String>? required_,
-      @JsonKey(name: 'enum') List<Object>? enum_,
+      @JsonKey(name: 'enum') List<Object?>? enum_,
       @JsonKey(name: 'const') Object? const_,
       @JsonKey(name: 'title') String? title,
       @JsonKey(name: 'description') String? description,
@@ -1022,7 +1022,7 @@ class __$OpenApiSchemasCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   $Res call({
     Object? properties = freezed,
-    Object? type = null,
+    Object? type = freezed,
     Object? required_ = freezed,
     Object? enum_ = freezed,
     Object? const_ = freezed,
@@ -1038,10 +1038,10 @@ class __$OpenApiSchemasCopyWithImpl<$Res>
           ? _self._properties
           : properties // ignore: cast_nullable_to_non_nullable
               as Map<String, OpenApiSchema>?,
-      type: null == type
+      type: freezed == type
           ? _self.type
           : type // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       required_: freezed == required_
           ? _self._required_
           : required_ // ignore: cast_nullable_to_non_nullable
@@ -1049,7 +1049,7 @@ class __$OpenApiSchemasCopyWithImpl<$Res>
       enum_: freezed == enum_
           ? _self._enum_
           : enum_ // ignore: cast_nullable_to_non_nullable
-              as List<Object>?,
+              as List<Object?>?,
       const_: freezed == const_ ? _self.const_ : const_,
       title: freezed == title
           ? _self.title
