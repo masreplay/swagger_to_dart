@@ -46,8 +46,10 @@ class EnumModelGeneratorStrategy
     );
     final filename = Renaming.instance.renameFile(className);
 
-    // Can be a list of [String] or an [int].
-    final values = model.value.enum_ ?? [];
+    // Can be a list of [String] or an [int]. A `null` entry marks the schema as nullable
+    // (OpenAPI 3.1 idiom for nullable enums) and isn't a real enum member — the containing
+    // property's own nullability already expresses that, so it's filtered out here.
+    final values = (model.value.enum_ ?? []).whereType<Object>().toList();
 
     final enumFallbackType = context.config.model.enumFallbackType;
 
