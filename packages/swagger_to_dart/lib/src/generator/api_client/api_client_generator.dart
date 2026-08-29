@@ -293,6 +293,7 @@ class ApiClientGenerator {
                     ..body = Block.of([
                       Code(
                         '''return ${methodName}_($_requestBodyName: $_requestBodyName${canToJson ? '.toJson()' : ''}, extras: extras,
+                      ${parameters.where((e) => e.name != _queriesParameterName).map((e) => '${e.name}: ${e.name},').join('\n')}
                       ${parameters.firstWhereOrNull((e) => e.name == _queriesParameterName) != null ? 'queries: queries,' : ''}
                       cancelToken: cancelToken,
                       onSendProgress: onSendProgress,
@@ -460,7 +461,11 @@ class ApiClientGenerator {
         continue;
       }
 
-      final dartType = context.extension.typeConverter.get(
+      final isRequired =
+          p.in_ == OpenApiPathMethodParameterType.path ||
+          (p.required_ ?? false);
+
+      var dartType = context.extension.typeConverter.get(
         p.schema,
         className: className,
       );
@@ -468,6 +473,13 @@ class ApiClientGenerator {
       final defaultValue = context.extension.typeConverter.getDefaultValue(
         p.schema,
       );
+
+      // An optional parameter without a schema default must be nullable,
+      // otherwise the generated Dart signature (no `required`, no default,
+      // non-nullable type) doesn't compile.
+      if (!isRequired && defaultValue == null && !dartType.endsWith('?')) {
+        dartType = '$dartType?';
+      }
 
       result.add(
         Parameter(
@@ -490,7 +502,7 @@ class ApiClientGenerator {
             ])
             ..named = true
             ..name = Renaming.instance.renameProperty(p.name)
-            ..required = defaultValue == null
+            ..required = isRequired
             ..defaultTo = defaultValue == null ? null : Code(defaultValue)
             ..type = refer(dartType),
         ),

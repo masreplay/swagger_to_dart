@@ -31,11 +31,11 @@ _OpenApiSchemas _$OpenApiSchemasFromJson(Map<String, dynamic> json) =>
             const OpenApiSchemaJsonConverter()
                 .fromJson(e as Map<String, dynamic>)),
       ),
-      type: json['type'] as String,
+      type: json['type'] as String?,
       required_: (json['required'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
-      enum_: (json['enum'] as List<dynamic>?)?.map((e) => e as Object).toList(),
+      enum_: json['enum'] as List<dynamic>?,
       const_: json['const'],
       title: json['title'] as String?,
       description: json['description'] as String?,
@@ -43,6 +43,14 @@ _OpenApiSchemas _$OpenApiSchemasFromJson(Map<String, dynamic> json) =>
           ?.map((e) => e as String)
           .toList(),
       additionalProperties: json['additionalProperties'] as bool?,
+      oneOf: (json['oneOf'] as List<dynamic>?)
+          ?.map((e) => const OpenApiSchemaJsonConverter()
+              .fromJson(e as Map<String, dynamic>))
+          .toList(),
+      discriminator: json['discriminator'] == null
+          ? null
+          : OpenApiSchemaOneOfDiscriminator.fromJson(
+              json['discriminator'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$OpenApiSchemasToJson(_OpenApiSchemas instance) =>
@@ -51,7 +59,7 @@ Map<String, dynamic> _$OpenApiSchemasToJson(_OpenApiSchemas instance) =>
               MapEntry(k, const OpenApiSchemaJsonConverter().toJson(e)))
           case final value?)
         'properties': value,
-      'type': instance.type,
+      if (instance.type case final value?) 'type': value,
       if (instance.required_ case final value?) 'required': value,
       if (instance.enum_ case final value?) 'enum': value,
       if (instance.const_ case final value?) 'const': value,
@@ -60,4 +68,11 @@ Map<String, dynamic> _$OpenApiSchemasToJson(_OpenApiSchemas instance) =>
       if (instance.xEnumVarnames case final value?) 'x-enum-varnames': value,
       if (instance.additionalProperties case final value?)
         'additionalProperties': value,
+      if (instance.oneOf
+              ?.map(const OpenApiSchemaJsonConverter().toJson)
+              .toList()
+          case final value?)
+        'oneOf': value,
+      if (instance.discriminator?.toJson() case final value?)
+        'discriminator': value,
     };

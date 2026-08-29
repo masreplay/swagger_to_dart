@@ -26,14 +26,18 @@ abstract class OpenApiSchemas with _$OpenApiSchemas {
     @OpenApiSchemaJsonConverter()
     @JsonKey(name: 'properties')
     required Map<String, OpenApiSchema>? properties,
-    @JsonKey(name: 'type') required String type,
+    @JsonKey(name: 'type') String? type,
     @JsonKey(name: 'required') List<String>? required_,
-    @JsonKey(name: 'enum') List<Object>? enum_,
+    @JsonKey(name: 'enum') List<Object?>? enum_,
     @JsonKey(name: 'const') Object? const_,
     @JsonKey(name: 'title') String? title,
     @JsonKey(name: 'description') String? description,
     @JsonKey(name: 'x-enum-varnames') List<String>? xEnumVarnames,
     @JsonKey(name: 'additionalProperties') bool? additionalProperties,
+    @OpenApiSchemaJsonConverter()
+    @JsonKey(name: 'oneOf')
+    List<OpenApiSchema>? oneOf,
+    @JsonKey(name: 'discriminator') OpenApiSchemaOneOfDiscriminator? discriminator,
   }) = _OpenApiSchemas;
 
   factory OpenApiSchemas.fromJson(Map<String, dynamic> json) =>
